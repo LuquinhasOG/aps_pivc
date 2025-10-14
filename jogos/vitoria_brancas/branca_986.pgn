@@ -1,0 +1,17 @@
+[Event "Rated Classical game"]
+[Site "https://lichess.org/okiy1793"]
+[Date "????.??.??"]
+[Round "?"]
+[White "umathurman"]
+[Black "?"]
+[Result "1-0"]
+[UTCDate "2013.01.01"]
+[UTCTime "20:36:54"]
+[WhiteElo "1139"]
+[BlackElo "?"]
+[ECO "B02"]
+[Opening "Alekhine Defense: Maroczy Variation"]
+[TimeControl "300+8"]
+[Termination "Normal"]
+
+1. e4 Nf6 2. d3 b6 3. Nf3 Bb7 4. Nc3 Na6 5. Be2 e5 6. Nxe5 d6 7. Nf3 g6 8. O-O Ng4 9. Ng5 Be7 10. Nh3 Ne5 11. d4 Nc6 12. d5 Ncb8 13. Qd4 Rg8 14. e5 c6 15. e6 fxe6 16. dxe6 Bc8 17. Bg4 c5 18. Qf4 h5 19. Qf7# 1-0
