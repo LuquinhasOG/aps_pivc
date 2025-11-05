@@ -13,12 +13,18 @@ classes = ['vazia', 'bispo_branco', 'cavalo_branco', 'dama_branca', 'peao_branco
 
 def build_model():
     modelo = models.Sequential()
-    modelo.add(layers.Input((50, 50, 1)))
-    # modelo.add(layers.Rescaling(1. / 255, input_shape=(50, 50, 1)))  # normalizar as imagens de entrada
+    modelo.add(layers.Input((64, 64, 1)))
+    modelo.add(layers.Rescaling(1./255))  # normalização das imagens
     modelo.add(layers.Conv2D(32, (3, 3), activation='relu'))  # conv3_32, relu para evitar vanishing do gradiente
     modelo.add(layers.MaxPooling2D((2, 2)))  # maxpool2
+    modelo.add(layers.Conv2D(64, (3, 3), activation='relu'))  # conv3_64, relu para evitar vanishing do gradiente
+    modelo.add(layers.MaxPooling2D((2, 2)))  # maxpool2
+    modelo.add(layers.Conv2D(128, (3, 3), activation='relu'))  # conv3_128, relu para evitar vanishing do gradiente
+    modelo.add(layers.Conv2D(64, (3, 3), activation='relu'))  # conv3_64, relu para evitar vanishing do gradiente
     modelo.add(layers.Flatten())  # flatten
-    modelo.add(layers.Dense(32, activation='relu'))  # dense32
+    modelo.add(layers.Dense(128, activation='relu'))  # dense128
+    modelo.add(layers.Dense(128, activation='relu'))  # dense128
+    modelo.add(layers.Dense(128, activation='relu'))  # dense128
     modelo.add(layers.Dense(13, activation='softmax'))  # dense13
 
     return modelo
@@ -28,7 +34,7 @@ if __name__ == "__main__":
     # datasets
     treino_ds = preprocessing.image_dataset_from_directory(
         path_treino,
-        image_size=(50, 50),
+        image_size=(64, 64),
         batch_size=32,
         color_mode='grayscale',
         labels='inferred',
@@ -39,7 +45,7 @@ if __name__ == "__main__":
 
     validacao_ds = preprocessing.image_dataset_from_directory(
         path_validacao,
-        image_size=(50, 50),
+        image_size=(64, 64),
         batch_size=32,
         color_mode='grayscale',
         labels='inferred',
@@ -50,7 +56,7 @@ if __name__ == "__main__":
 
     teste_ds = preprocessing.image_dataset_from_directory(
         path_teste,
-        image_size=(50, 50),
+        image_size=(64, 64),
         batch_size=32,
         color_mode='grayscale',
         labels='inferred',
@@ -60,7 +66,7 @@ if __name__ == "__main__":
     )
 
     modelo = build_model()
-    modelo.load_weights("deteccao.weights.h5")
+    # modelo.load_weights("deteccao.weights.h5")
     modelo.compile(optimizer='adam', loss=SparseCategoricalCrossentropy(), metrics=['accuracy'])
     modelo.fit(treino_ds, validation_data=validacao_ds, epochs=epochs)
 
