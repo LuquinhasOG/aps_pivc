@@ -30,6 +30,13 @@ def build_model():
     return modelo
 
 
+def classificar(modelo, imagem):
+    imagem = imagem.reshape((64, 64, 1))
+    imagem = np.expand_dims(imagem, axis=0)
+
+    return np.argmax(modelo.predict(imagem))
+
+
 if __name__ == "__main__":
     # datasets
     treino_ds = preprocessing.image_dataset_from_directory(
@@ -66,25 +73,10 @@ if __name__ == "__main__":
     )
 
     modelo = build_model()
-    # modelo.load_weights("deteccao.weights.h5")
     modelo.compile(optimizer='adam', loss=SparseCategoricalCrossentropy(), metrics=['accuracy'])
     modelo.fit(treino_ds, validation_data=validacao_ds, epochs=epochs)
 
     loss, accuracy = modelo.evaluate(teste_ds)
     print(f"Acurácia: {accuracy:.4f} | Loss: {loss:.4f}")
 
-    modelo.save_weights("deteccao.weights.h5")  # 95%
-
-    # rotulos = []
-    # previsoes = []
-    # for imgs, labels in teste_ds:
-    #     rotulos.extend(labels.numpy())
-    #     for i in imgs:
-    #         i = tf.expand_dims(i, axis=0)
-    #         previsoes.append(np.argmax(modelo.predict(i)))
-    #
-    # print(len(rotulos))
-    # print(len(previsoes))
-    #
-    # matriz = tf.math.confusion_matrix(rotulos, previsoes)
-    # print(matriz)
+    modelo.save_weights("deteccao.weights.h5")
