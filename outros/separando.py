@@ -5,8 +5,8 @@ from shutil import move
 
 classes = ['vazia', 'bispo_branco', 'cavalo_branco', 'dama_branca', 'peao_branco', 'rei_branco', 'torre_branca',
            'bispo_preto', 'cavalo_preto', 'dama_preta', 'peao_preto', 'rei_preto', 'torre_preta']
-fonte = 'imagens/separado'
-destino = 'imagens/treino'
+fonte = '../imagens/separado'
+destino = '../imagens/treino'
 
 imagens = os.listdir(fonte)
 for i in range(len(imagens)):

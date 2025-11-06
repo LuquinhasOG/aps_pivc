@@ -2,7 +2,7 @@ import os
 import shutil
 import random
 
-origem = '../imagens/teste'
+origem = '../imagens/separar'
 destinos = ['../imagens/treino', '../imagens/validacao', '../imagens/teste']
 percentuais = [0.7, 0.15, 0.15]
 

@@ -3,13 +3,13 @@ import os
 
 from random import choice
 
-pasta = 'test'
-destino = 'imagens/separado'
+pasta = '../test'
+destino = '../imagens/separado'
 imagens = [i for i in os.listdir(pasta)]
 
 dim = (512, 512)
 tam = int(dim[0]/8)
-c = int(input("número: "))
+c = len(os.listdir(destino))
 
 img = cv2.imread(f'{pasta}/{choice(imagens)}')
 resized = cv2.resize(img, dim)

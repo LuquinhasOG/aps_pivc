@@ -16,7 +16,7 @@ def build_model():
     modelo.add(layers.Input((64, 64, 1)))
     modelo.add(layers.Rescaling(1./255))  # normalização das imagens
     modelo.add(layers.Conv2D(32, (3, 3), activation='relu'))  # conv3_32, relu para evitar vanishing do gradiente
-    modelo.add(layers.MaxPooling2D((2, 2)))  # maxpool2
+    modelo.add(layers.MaxPooling2D((3, 3), strides=2))  # maxpool3_stride2
     modelo.add(layers.Conv2D(64, (3, 3), activation='relu'))  # conv3_64, relu para evitar vanishing do gradiente
     modelo.add(layers.MaxPooling2D((2, 2)))  # maxpool2
     modelo.add(layers.Conv2D(128, (3, 3), activation='relu'))  # conv3_128, relu para evitar vanishing do gradiente
