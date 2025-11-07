@@ -5,7 +5,6 @@ import cv2
 # configurações
 # diz se o jogador está jogando com as brancas ou não
 # importante para definir a posição das peças, pois o chess.com gira o tabuleiro de acordo com sua cor
-jogando_brancas = True
 nova_resolucao = (512, 512)  # prints serão redimensionadas para esta resolução
 tam_casa = nova_resolucao[0] // 8  # comprimento de uma casa no tabuleiro
 
@@ -21,18 +20,18 @@ def captura_imagem(pontos):
 
 
 # separa as peças e define sua posição
-def separar_celulas(imagem):
+def separar_celulas(imagem, jogando_brancas):
     casas_separadas = list()
     for i in range(8):
         for j in range(8):
             if jogando_brancas:
-                celula = imagem[(7 - i) * tam_casa:(8 - i) * tam_casa, j * tam_casa:(j + 1) * tam_casa]
+                celula = np.array(imagem[(7 - i) * tam_casa:(8 - i) * tam_casa, j * tam_casa:(j + 1) * tam_casa])
             else:
-                celula = imagem[i * tam_casa:(i + 1) * tam_casa, j * tam_casa:(j + 1) * tam_casa]
+                celula = np.array(imagem[i * tam_casa:(i + 1) * tam_casa, j * tam_casa:(j + 1) * tam_casa])
 
-            casas_separadas.append(((i, j), celula))  # o primeiro elemento da tupla é a posição e o segundo a imagem
+            casas_separadas.append(celula.reshape((64, 64, 1)))  # o primeiro elemento da tupla é a posição e o segundo a imagem
 
-    return casas_separadas
+    return np.array(casas_separadas)
 
 
 # if __name__ == "__main__":

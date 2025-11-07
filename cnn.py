@@ -2,13 +2,12 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras import models, layers, datasets, preprocessing
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
+from util import classes
 
 path_treino = "imagens/treino"
 path_teste = "imagens/teste"
 path_validacao = "imagens/validacao"
 epochs = 20
-classes = ['vazia', 'bispo_branco', 'cavalo_branco', 'dama_branca', 'peao_branco', 'rei_branco', 'torre_branca',
-           'bispo_preto', 'cavalo_preto', 'dama_preta', 'peao_preto', 'rei_preto', 'torre_preta']
 
 
 def build_model():
@@ -30,11 +29,12 @@ def build_model():
     return modelo
 
 
-def classificar(modelo, imagem):
-    imagem = imagem.reshape((64, 64, 1))
-    imagem = np.expand_dims(imagem, axis=0)
+def classificar(modelo, imagens):
+    print(imagens.shape)
+    # imagem = imagem.reshape((64, 64, 1))
+    # imagem = np.expand_dims(imagem, axis=0)
 
-    return np.argmax(modelo.predict(imagem))
+    return np.argmax(modelo.predict(imagens), axis=1)
 
 
 if __name__ == "__main__":
