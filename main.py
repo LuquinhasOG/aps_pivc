@@ -1,7 +1,6 @@
 import pyautogui as ag
 import cv2
 import numpy as np
-import chess
 import chess.engine
 
 from util import parse_fen
