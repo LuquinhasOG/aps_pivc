@@ -1,8 +1,10 @@
 import pyautogui as ag
 import cv2
 import numpy as np
+import chess
+import chess.engine
 
-from util import classes, parse_fen
+from util import parse_fen
 from cnn import build_model, classificar
 from processamento_imagem import captura_imagem, separar_celulas
 
@@ -22,7 +24,7 @@ while True:
         pontos.append(ag.position())
 
     if len(pontos) == 2:
-        tabuleiro = captura_imagem(pontos)
+        _, tabuleiro = captura_imagem(pontos)
 
         cv2.imshow("capturado", tabuleiro)
         tecla = cv2.waitKey(0)
@@ -36,15 +38,19 @@ while True:
 cv2.destroyAllWindows()
 
 # loop classificação e tomada de decisão
-imagem = captura_imagem(pontos)
-tabuleiro = list()
+_, imagem = captura_imagem(pontos)
+engine = chess.engine.SimpleEngine.popen_uci("stockfish.exe")
 while True:
     cv2.imshow("Tabuleiro", imagem)
     tecla = cv2.waitKey(100)
 
     if tecla == ord('q'):
-        imagem = captura_imagem(pontos)
-        celulas = separar_celulas(imagem, jogando_brancas)
-        tabuleiro = classificar(modelo, celulas)
+        cinza, imagem = captura_imagem(pontos)
+        celulas = separar_celulas(cinza, jogando_brancas)
+        classificacao = classificar(modelo, celulas)
+        fen = parse_fen(classificacao, jogando_brancas)
+        tabuleiro = chess.Board(fen)
+        movimento = engine.play(tabuleiro, chess.engine.Limit(time=1))
 
-        print(parse_fen(tabuleiro, jogando_brancas))
+        cv2.putText(imagem, f"movimento: {movimento.move}", (0, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        print(fen)

@@ -16,7 +16,7 @@ def captura_imagem(pontos):
     grayscale = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)  # converte para tons de cinza
     resized = cv2.resize(grayscale, nova_resolucao, interpolation=cv2.INTER_AREA)  # redimensiona
 
-    return resized
+    return [resized, imagem]
 
 
 # separa as peças e define sua posição
@@ -27,7 +27,7 @@ def separar_celulas(imagem, jogando_brancas):
             if jogando_brancas:
                 celula = np.array(imagem[(7 - i) * tam_casa:(8 - i) * tam_casa, j * tam_casa:(j + 1) * tam_casa])
             else:
-                celula = np.array(imagem[i * tam_casa:(i + 1) * tam_casa, j * tam_casa:(j + 1) * tam_casa])
+                celula = np.array(imagem[i * tam_casa:(i + 1) * tam_casa, (7 - j) * tam_casa:(8 - j) * tam_casa])
 
             casas_separadas.append(celula.reshape((64, 64, 1)))  # o primeiro elemento da tupla é a posição e o segundo a imagem
 
