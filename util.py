@@ -35,5 +35,5 @@ def parse_fen(tabuleiro, branco):
         if i != len(linhas) - 1:
             fen += '/'
 
-    fen += f' {'w' if branco else 'b'}'
+    fen += f' {'w' if branco else 'b'} KQkq'
     return fen
