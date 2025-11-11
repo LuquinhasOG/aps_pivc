@@ -1,5 +1,6 @@
 import numpy as np
 import tensorflow as tf
+
 from tensorflow.keras import models, layers, datasets, preprocessing
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
 from util import classes
@@ -7,7 +8,7 @@ from util import classes
 path_treino = "imagens/treino"
 path_teste = "imagens/teste"
 path_validacao = "imagens/validacao"
-epochs = 20
+epochs = 30
 
 
 def build_model():
@@ -22,18 +23,17 @@ def build_model():
     modelo.add(layers.Conv2D(64, (3, 3), activation='relu'))  # conv3_64, relu para evitar vanishing do gradiente
     modelo.add(layers.Flatten())  # flatten
     modelo.add(layers.Dense(128, activation='relu'))  # dense128
+    modelo.add(layers.Dropout(0.3))
     modelo.add(layers.Dense(128, activation='relu'))  # dense128
+    modelo.add(layers.Dropout(0.3))
     modelo.add(layers.Dense(128, activation='relu'))  # dense128
+    modelo.add(layers.Dropout(0.3))
     modelo.add(layers.Dense(13, activation='softmax'))  # dense13
 
     return modelo
 
 
 def classificar(modelo, imagens):
-    print(imagens.shape)
-    # imagem = imagem.reshape((64, 64, 1))
-    # imagem = np.expand_dims(imagem, axis=0)
-
     return np.argmax(modelo.predict(imagens), axis=1)
 
 
